@@ -7,7 +7,7 @@
     <title>Snake</title>
     <meta name="description" content="Un petit snake des familles">
     <meta name="author" content="Soreon">
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="css/styles.css">
 
     <!--[if lt IE 9]>
@@ -17,7 +17,14 @@
 
 <body>
     <canvas id="main-canvas" class="canvas" width="100" height="100"></canvas>
-    <button id="resetButton" class="resetButton">Reset !</button>
+    <div class="control-buttons">
+        <i id="reset-button" class="material-icons" >autorenew</i>
+        <span class="pause-play">
+            <i id="play-button" class="material-icons" style="opacity: 1; z-index: 1;">play_arrow</i>
+            <i id="pause-button" class="material-icons" style="opacity: 0; z-index: 0;">pause</i>
+        </span>
+        <span class="number-of-parts"></span>
+    </div>
     <script src="js/Snake.js"></script>
     <script src="js/scripts.js"></script>
 </body>
