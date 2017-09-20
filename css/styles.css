@@ -1,0 +1,38 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+button:focus {
+    outline:0;
+}
+
+.canvas {
+    width: 100%;
+    height: 100%;
+    background-color: #252526;
+    -webkit-transform: translateZ(0);
+}
+
+.resetButton {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    height: 30px;
+    width: 65px;
+    background-color: transparent;
+    color: #0FF0FF;
+    border: 1px solid #0FF0FF;
+    cursor: pointer;
+}
+
+.controller {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+}
+
+.hidden {
+    display: none;
+}
