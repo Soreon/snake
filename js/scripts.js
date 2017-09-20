@@ -46,19 +46,19 @@ function updateCanvasSize() {
 
 function animate() {
     "use strict";
+    window.requestAnimationFrame(animate);
     if (start) {
-        window.requestAnimationFrame(animate);
+        snake.move();
     }
-    snake.move();
     draw();
 }
 
 canvas.addEventListener("mousemove", function (event){
     "use strict";
+
     mousePosition.x = event.clientX;
     mousePosition.y = event.clientY;
     snake.orientation = Math.toDegrees(Math.atan2(event.clientY - snake.position.y, event.clientX - snake.position.x));
-    draw();
 });
 
 canvas.addEventListener("mouseleave", function (event){
@@ -79,28 +79,23 @@ canvas.addEventListener("mouseenter", function (event){
 window.addEventListener("load", function () {
     "use strict";
     updateCanvasSize();
-    draw();
 });
 
 window.addEventListener("resize", function () {
     "use strict";
     updateCanvasSize();
-    draw();
 });
 
 document.addEventListener("keypress", function (event) {
     "use strict";
     if (event.keyCode === 13 && !start) {
         start = true;
-        animate();
     }
     if (event.keyCode === 43) {
         snake.addBodyPart();
-        draw();
     }
     if (event.keyCode === 45) {
         snake.removeBodyPart();
-        draw();
     }
 });
 
@@ -109,7 +104,9 @@ document.getElementById("resetButton").addEventListener("click", function (){
     snake.position = {x: window.innerWidth / 2, y: window.innerHeight / 2};
     snake.orientation = 0;
     start = false;
+    document.getElementById("resetButton").blur();
 });
 
+animate();
 
 //TODO: système de redimentionnement de la fenêtre
