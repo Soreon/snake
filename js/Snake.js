@@ -8,7 +8,7 @@ function finFormula(x, t) {
 }
 
 function bodyFormula(x) {
-    return 10 * Math.log(x) - 0.8 * (x-5);
+    return Math.abs(10 * Math.log(x) - 0.8 * (x-5));
 }
 
 function BodyPart(previous) {
