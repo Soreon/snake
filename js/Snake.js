@@ -140,13 +140,13 @@ function Snake(x, y) {
     }
 
     this.removeBodyPart = function () {
-        this.numberOfParts--;
         if (this.next) {
             if (this.next.next) {
                 this.next.removeBodyPart();
             } else {
                 this.next = null;
             }
+            this.numberOfParts--;
         }
     };
 }
