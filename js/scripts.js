@@ -4,9 +4,10 @@
 
 var canvas = document.getElementById("main-canvas");
 var context = canvas.getContext("2d");
-var snake = new Snake(window.innerWidth / 2, window.innerHeight / 2);
 var start = false;
 var mousePosition = {x: 0, y: 0};
+var snakes = [];
+
 
 Math.toRadians = function (degrees) {
     "use strict";
@@ -50,7 +51,9 @@ function line(ax, ay, bx, by, color, thickness) {
 function draw() {
     "use strict";
     clearCanvas();
-    snake.draw();
+    snakes.forEach(function(snake) {
+        snake.draw();
+    });
 }
 
 function updateCanvasSize() {
@@ -63,7 +66,9 @@ function animate() {
     "use strict";
     window.requestAnimationFrame(animate);
     if (start) {
-        snake.move();
+        snakes.forEach(function(snake) {
+            snake.move();
+        });
     }
     draw();
 }
@@ -85,39 +90,51 @@ function togglePlay(play) {
     }
 }
 
+//Souris bouge, snake qui suis le mouvement
 canvas.addEventListener("mousemove", function (event){
     "use strict";
 
     mousePosition.x = event.clientX;
     mousePosition.y = event.clientY;
-    snake.orientation = Math.toDegrees(Math.atan2(event.clientY - snake.position.y, event.clientX - snake.position.x));
+    snakes.forEach(function(snake) {
+        snake.orientation = Math.toDegrees(Math.atan2(event.clientY - snake.position.y, event.clientX - snake.position.x));
+    });
 });
 
+//Souris sors de la fenetre
 canvas.addEventListener("mouseleave", function (event){
     "use strict";
-    snake.wandering = true;
+    snakes.forEach(function(snake){
+        snake.wandering = true;
 
-    if(snake.position.x <= 0 || snake.position.x >= window.innerWidth || snake.position.y <= 0 || snake.position.y >= window.innerHeight) {
-        snake.position.x = window.innerWidth / 2;
-        snake.position.y = window.innerHeight / 2;
-    }
+        if(snake.position.x <= 0 || snake.position.x >= window.innerWidth || snake.position.y <= 0 || snake.position.y >= window.innerHeight) {
+            snake.position.x = window.innerWidth / 2;
+            snake.position.y = window.innerHeight / 2;
+        }
+    })
 });
 
+//Souris entre dans la fenetre
 canvas.addEventListener("mouseenter", function (event){
     "use strict";
-    snake.wandering = false;
+    snakes.forEach(function(snake) {
+        snake.wandering = false;
+    });
 });
 
+//Chargement ?
 window.addEventListener("load", function () {
     "use strict";
     updateCanvasSize();
 });
 
+//Redimension de la fenetre ?
 window.addEventListener("resize", function () {
     "use strict";
     updateCanvasSize();
 });
 
+//Controles Utilisateur
 document.addEventListener("keypress", function (event) {
     "use strict";
     if (event.keyCode === 13) {
@@ -129,12 +146,21 @@ document.addEventListener("keypress", function (event) {
     if (event.keyCode === 45) {
         snake.removeBodyPart();
     }
+    if (event.keyCode === 32) {
+        welcomeAFriend("Serpenreon");
+    }
 });
 
+//A bah ca recommence ?
 document.getElementById("reset-button").addEventListener("click", function (){
     "use strict";
-    snake.position = {x: window.innerWidth / 2, y: window.innerHeight / 2};
-    snake.orientation = 0;
+    this.snakes = [];
+    this.welcomeAFriend("Serpenreon Primaris");
+
+    snakes.forEach(function(snake) {
+        snake.position = {x: window.innerWidth / 2, y: window.innerHeight / 2};
+        snake.orientation = 0;
+    });
     togglePlay(false);
     document.getElementById("reset-button").blur();
 });
@@ -142,10 +168,22 @@ document.getElementById("reset-button").addEventListener("click", function (){
 document.getElementById("play-button").addEventListener("click", function() { togglePlay(true); });
 document.getElementById("pause-button").addEventListener("click", function() { togglePlay(false); });
 
-for(var i=0; i<64; i++) {
-    snake.addBodyPart();
+
+function welcomeAFriend(name)
+{
+    this.snakes.push(new Snake(window.innerWidth / 2, window.innerHeight / 2));
+    console.log("Welcome Serpenreon");
+
+    for(var i=0; i<64; i++) {
+        this.snakes[snakes.length-1].addBodyPart();
+    }
 }
 
+function init() {
+    this.welcomeAFriend();
+}
+
+init();
 animate();
 
 //TODO: système de redimentionnement de la fenêtre
