@@ -102,7 +102,7 @@ function BodyPart(previous) {
 }
 
 
-function Snake(x, y) {
+function Snake(x, y, name) {
     "use strict";
     this.position = {x: x, y: y};
     this.next = null;
@@ -115,6 +115,9 @@ function Snake(x, y) {
     this.wandering = false;
     this.baseConeValue = 15;
     this.instantConeValue = this.baseConeValue;
+    
+    //Je l'aime bien ce nom la
+    this.name = name;
 
     this.draw = function () {
         // Tête du snake
