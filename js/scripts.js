@@ -6,19 +6,8 @@ var canvas = document.getElementById("main-canvas");
 var context = canvas.getContext("2d");
 var start = false;
 var mousePosition = {x: 0, y: 0};
-console.log(typeof(Math.toRadians));
-
 var snakes = [];
-welcomeAFriend();
 
-function welcomeAFriend(name)
-{
-    this.snakes.push(new Snake(window.innerWidth / 2, window.innerHeight / 2));
-
-    for(var i=0; i<64; i++) {
-        this.snakes[snakes.length-1].addBodyPart();
-    }
-}
 
 Math.toRadians = function (degrees) {
     "use strict";
@@ -62,7 +51,7 @@ function line(ax, ay, bx, by, color, thickness) {
 function draw() {
     "use strict";
     clearCanvas();
-    this.snakes.forEach(function(snake) {
+    snakes.forEach(function(snake) {
         snake.draw();
     });
 }
@@ -77,7 +66,7 @@ function animate() {
     "use strict";
     window.requestAnimationFrame(animate);
     if (start) {
-        this.snakes.forEach(function(snake) {
+        snakes.forEach(function(snake) {
             snake.move();
         });
     }
@@ -107,7 +96,7 @@ canvas.addEventListener("mousemove", function (event){
 
     mousePosition.x = event.clientX;
     mousePosition.y = event.clientY;
-    this.snakes.forEach(function(snake) {
+    snakes.forEach(function(snake) {
         snake.orientation = Math.toDegrees(Math.atan2(event.clientY - snake.position.y, event.clientX - snake.position.x));
     });
 });
@@ -115,7 +104,7 @@ canvas.addEventListener("mousemove", function (event){
 //Souris sors de la fenetre
 canvas.addEventListener("mouseleave", function (event){
     "use strict";
-    this.snakes.forEach(function(snake){
+    snakes.forEach(function(snake){
         snake.wandering = true;
 
         if(snake.position.x <= 0 || snake.position.x >= window.innerWidth || snake.position.y <= 0 || snake.position.y >= window.innerHeight) {
@@ -128,7 +117,7 @@ canvas.addEventListener("mouseleave", function (event){
 //Souris entre dans la fenetre
 canvas.addEventListener("mouseenter", function (event){
     "use strict";
-    this.snakes.forEach(function(snake) {
+    snakes.forEach(function(snake) {
         snake.wandering = false;
     });
 });
@@ -157,8 +146,8 @@ document.addEventListener("keypress", function (event) {
     if (event.keyCode === 45) {
         snake.removeBodyPart();
     }
-    if (event.keyCode === 83) {
-        this.welcomeAFriend("Serpenreon");
+    if (event.keyCode === 32) {
+        welcomeAFriend("Serpenreon");
     }
 });
 
@@ -168,7 +157,7 @@ document.getElementById("reset-button").addEventListener("click", function (){
     this.snakes = [];
     this.welcomeAFriend("Serpenreon Primaris");
 
-    this.snakes.forEach(function(snake) {
+    snakes.forEach(function(snake) {
         snake.position = {x: window.innerWidth / 2, y: window.innerHeight / 2};
         snake.orientation = 0;
     });
@@ -180,7 +169,21 @@ document.getElementById("play-button").addEventListener("click", function() { to
 document.getElementById("pause-button").addEventListener("click", function() { togglePlay(false); });
 
 
+function welcomeAFriend(name)
+{
+    this.snakes.push(new Snake(window.innerWidth / 2, window.innerHeight / 2));
+    console.log("Welcome Serpenreon");
 
+    for(var i=0; i<64; i++) {
+        this.snakes[snakes.length-1].addBodyPart();
+    }
+}
+
+function init() {
+    this.welcomeAFriend();
+}
+
+init();
 animate();
 
 //TODO: système de redimentionnement de la fenêtre
