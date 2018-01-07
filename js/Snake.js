@@ -11,7 +11,7 @@ function bodyFormula(x) {
     return Math.abs(10 * Math.log(x) - 0.8 * (x-5));
 }
 
-function BodyPart(previous, mainColor, leftWing, RightWing) {
+function BodyPart(previous, dna) {
     "use strict";
     this.previous = previous;
     this.head = previous.head;
@@ -23,8 +23,10 @@ function BodyPart(previous, mainColor, leftWing, RightWing) {
     this.orientation = previous.orientation;
     this.position = {x: 0, y: 0};
 
+    this.dna = previous.dna;
+
     this.draw = function () {
-        circle(this.position.x, this.position.y, this.size, "#41f47f");
+        circle(this.position.x, this.position.y, this.size, this.dna.bodyColor);
 
         // Ailerons
         // var f = 0.25 * Math.pow(this.size, 2) - 2 * this.size + 13;
@@ -42,8 +44,8 @@ function BodyPart(previous, mainColor, leftWing, RightWing) {
         var xpn = n * Math.cos(p);
         var ypf = f * Math.sin(p);
         var ypn = n * Math.sin(p);
-        line(this.position.x + xmn, this.position.y + ymn, this.position.x + xmf, this.position.y + ymf, "#41f4f1");
-        line(this.position.x + xpn, this.position.y + ypn, this.position.x + xpf, this.position.y + ypf, "#41f4f1");
+        line(this.position.x + xmn, this.position.y + ymn, this.position.x + xmf, this.position.y + ymf, this.dna.firstLeftWingColor);
+        line(this.position.x + xpn, this.position.y + ypn, this.position.x + xpf, this.position.y + ypf, this.dna.firstRightWingColor);
 
         if (this.next) {
             this.next.draw();
@@ -122,13 +124,13 @@ function Snake(x, y, name, dna) {
 
     this.draw = function () {
         // Tête du snake
-        circle(this.position.x, this.position.y, this.size, "#0fff52");
+        circle(this.position.x, this.position.y, this.size, this.dna.bodyColor);
 
         // Nez du snake
         var radius = this.size + 10;
         var xp = radius * Math.cos(Math.toRadians(this.orientation));
         var yp = radius * Math.sin(Math.toRadians(this.orientation));
-        circle(this.position.x + xp, this.position.y + yp, 2, "#0fff52");
+        circle(this.position.x + xp, this.position.y + yp, 2, this.dna.bodyColor);
 
         // Ailerons
         var base = this.size + 5;
@@ -144,8 +146,8 @@ function Snake(x, y, name, dna) {
         var xpn = n * Math.cos(p);
         var ypf = f * Math.sin(p);
         var ypn = n * Math.sin(p);
-        line(this.position.x + xmn, this.position.y + ymn, this.position.x + xmf, this.position.y + ymf, "#0fff52");
-        line(this.position.x + xpn, this.position.y + ypn, this.position.x + xpf, this.position.y + ypf, "#0fff52");
+        line(this.position.x + xmn, this.position.y + ymn, this.position.x + xmf, this.position.y + ymf, this.dna.firstLeftWingColor);
+        line(this.position.x + xpn, this.position.y + ypn, this.position.x + xpf, this.position.y + ypf, this.dna.firstRightWingColor);
 
         if (this.next) {
             this.next.draw();

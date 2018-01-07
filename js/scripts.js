@@ -1,6 +1,8 @@
 /*global document */
 /*global window */
 /*global Snake */
+/*global Dna */
+
 
 var canvas = document.getElementById("main-canvas");
 var context = canvas.getContext("2d");
@@ -147,7 +149,7 @@ document.addEventListener("keypress", function (event) {
         snake.removeBodyPart();
     }
     if (event.keyCode === 32) {
-        welcomeAFriend("Serpenreon");
+        welcomeAFriend("AHAHHA");
     }
 });
 
@@ -169,10 +171,11 @@ document.getElementById("play-button").addEventListener("click", function() { to
 document.getElementById("pause-button").addEventListener("click", function() { togglePlay(false); });
 
 
-function welcomeAFriend(name)
+function welcomeAFriend(name, dna = null)
 {
-    this.snakes.push(new Snake(window.innerWidth / 2, window.innerHeight / 2));
-    console.log("Welcome Serpenreon");
+    var newDna = new Dna();
+    this.snakes.push(new Snake(window.innerWidth / 2, window.innerHeight / 2, name, newDna));
+    console.log("Welcome" + name);
 
     for(var i=0; i<64; i++) {
         this.snakes[snakes.length-1].addBodyPart();
@@ -180,6 +183,7 @@ function welcomeAFriend(name)
 }
 
 function init() {
+
     this.welcomeAFriend();
 }
 
